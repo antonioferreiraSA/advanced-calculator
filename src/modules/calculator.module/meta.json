@@ -1,0 +1,13 @@
+{
+  "css_assets": [],
+  "external_js": [],
+  "global": false,
+  "help_text": "Advanced Calculator with Currency Conversion",
+  "host_template_types": ["PAGE"],
+  "icon": "calculator",
+  "js_assets": [],
+  "label": "Advanced Calculator",
+  "smart_type": "NOT_SMART",
+  "tags": ["calculator", "currency", "conversion"],
+  "is_available_for_new_content": true
+}

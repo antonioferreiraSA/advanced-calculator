@@ -1,0 +1,82 @@
+[
+  {
+    "name": "calculator_title",
+    "label": "Calculator Title",
+    "required": false,
+    "type": "text",
+    "default": "Advanced Calculator"
+  },
+  {
+    "name": "first_number_label",
+    "label": "First Number Input Label",
+    "required": false,
+    "type": "text",
+    "default": "First Number"
+  },
+  {
+    "name": "second_number_label",
+    "label": "Second Number Input Label",
+    "required": false,
+    "type": "text",
+    "default": "Second Number"
+  },
+  {
+    "name": "calculate_button_text",
+    "label": "Calculate Button Text",
+    "required": false,
+    "type": "text",
+    "default": "Calculate"
+  },
+  {
+    "name": "clear_button_text",
+    "label": "Clear Button Text",
+    "required": false,
+    "type": "text",
+    "default": "Clear"
+  },
+  {
+    "name": "primary_color",
+    "label": "Primary Color",
+    "required": false,
+    "type": "color",
+    "default": {
+      "color": "#0091ae",
+      "opacity": 100
+    }
+  },
+  {
+    "name": "currency_converter_title",
+    "label": "Currency Converter Title",
+    "required": false,
+    "type": "text",
+    "default": "Currency Converter"
+  },
+  {
+    "name": "amount_label",
+    "label": "Amount Input Label",
+    "required": false,
+    "type": "text",
+    "default": "Amount"
+  },
+  {
+    "name": "from_currency_label",
+    "label": "From Currency Label",
+    "required": false,
+    "type": "text",
+    "default": "From"
+  },
+  {
+    "name": "to_currency_label",
+    "label": "To Currency Label",
+    "required": false,
+    "type": "text",
+    "default": "To"
+  },
+  {
+    "name": "convert_button_text",
+    "label": "Convert Button Text",
+    "required": false,
+    "type": "text",
+    "default": "Convert"
+  }
+]
