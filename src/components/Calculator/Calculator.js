@@ -93,6 +93,11 @@ const Calculator = ({ moduleData }) => {
     );
   }, [primary_color, top_background_color, bottom_background_color]);
 
+  // Fetch available currencies when component mounts
+  useEffect(() => {
+    fetchAvailableCurrencies();
+  }, []);
+
   // Fetch exchange rates when currencies change
   useEffect(() => {
     if (showConversion && fromCurrency && toCurrency) {
@@ -100,38 +105,70 @@ const Calculator = ({ moduleData }) => {
     }
   }, [fromCurrency, toCurrency, showConversion]);
 
-  // Function to fetch exchange rates from the API
+  /**
+   * Fetches the exchange rate between two currencies
+   * @param {string} baseCurrency - The source currency code
+   * @param {string} targetCurrency - The target currency code
+   * @returns {Promise<void>}
+   */
   const fetchExchangeRate = async (baseCurrency, targetCurrency) => {
+    // Same currency conversion is always 1:1
     if (baseCurrency === targetCurrency) {
       setExchangeRate(1);
       return;
     }
 
     setIsLoadingRates(true);
+    
     try {
-      const response = await fetch(
-        `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/${baseCurrency}`,
-      );
+      const endpoint = `https://v6.exchangerate-api.com/v6/${API_KEY}/pair/${baseCurrency}/${targetCurrency}`;
+      const response = await fetch(endpoint);
+      
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
+      
       const data = await response.json();
 
       if (data.result === 'success') {
-        // Store the conversion rates
-        setExchangeRates(data.conversion_rates);
-        setExchangeRate(data.conversion_rates[targetCurrency]);
+        setExchangeRate(data.conversion_rate);
+      } else {
+        console.error(`Exchange rate API error: ${data.error_type}`);
+        setExchangeRate(null);
+      }
+    } catch (error) {
+      console.error('Failed to fetch exchange rate:', error.message);
+      setExchangeRate(null);
+    } finally {
+      setIsLoadingRates(false);
+    }
+  };
+  
+  /**
+   * Fetches available currencies from the Exchange Rate API
+   * @returns {Promise<void>}
+   */
+  const fetchAvailableCurrencies = async () => {
+    try {
+      const endpoint = `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/USD`;
+      const response = await fetch(endpoint);
+      
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
+      
+      const data = await response.json();
 
+      if (data.result === 'success') {
         // Extract available currencies from the response
         const currencies = Object.keys(data.conversion_rates);
         setAvailableCurrencies(currencies);
-
-        // Update last updated timestamp
         setLastUpdated(new Date());
       } else {
-        console.error('Error fetching exchange rates:', data);
+        console.error(`Failed to fetch currencies: ${data.error_type}`);
       }
     } catch (error) {
-      console.error('Error fetching exchange rates:', error);
-    } finally {
-      setIsLoadingRates(false);
+      console.error('Failed to fetch available currencies:', error.message);
     }
   };
 
