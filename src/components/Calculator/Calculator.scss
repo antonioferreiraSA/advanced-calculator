@@ -684,8 +684,8 @@ $breakpoint-xl: 1200px;
 
 .history-card {
   width: 100%;
-  max-width: 500px;
-  background-color: #fff;
+  max-width: 584px;
+  background-color: #F5F5F5;
   border-radius: var(--border-radius);
   padding: 1.5rem;
   color: var(--text-color);
@@ -697,7 +697,7 @@ $breakpoint-xl: 1200px;
   @media (min-width: $breakpoint-lg) {
     flex: 1;
     min-width: 300px;
-    max-width: 500px;
+    max-width: 584px;
   }
 }
 
@@ -735,31 +735,107 @@ $breakpoint-xl: 1200px;
 }
 
 .history-list {
-  max-height: 300px;
+  max-height: 400px;
   overflow-y: auto;
+  
+  /* Hide scrollbar for webkit browsers */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for Firefox */
+  scrollbar-width: none;
+  
+  /* Hide scrollbar for IE and Edge */
+  -ms-overflow-style: none;
 }
 
 .history-item {
-  padding: 1rem 0;
-  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  padding: 12px 12px 24px 24px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 24px;
+  align-self: stretch;
+  border-radius: 32px 8px 32px 32px;
+  background: #FFF;
+  position: relative;
+  margin-bottom: 1rem;
   
   &:last-child {
-    border-bottom: none;
+    margin-bottom: 0;
   }
   
   .history-calculation {
     font-weight: 500;
+    margin-bottom: 0.5rem;
   }
   
   .history-conversion {
     color: var(--primary-color);
     margin-top: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+    .from-amount {
+      font-weight: 500;
+    }
+    
+    .currency-flag {
+      width: 16px;
+      height: 12px;
+      border-radius: 2px;
+    }
+    
+    .to-amount {
+      font-weight: 500;
+    }
   }
   
   .history-timestamp {
     font-size: 0.8rem;
     color: var(--text-light);
     margin-top: 0.25rem;
+  }
+  
+  .history-actions {
+    position: absolute;
+    top: 1rem;
+    right: 0;
+    display: flex;
+    gap: 0.5rem;
+    
+    .history-action-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      
+      &.delete-btn {
+        color: #ef4444;
+        
+        &:hover {
+          background-color: rgba(239, 68, 68, 0.1);
+        }
+      }
+      
+      &.copy-btn {
+        color: #10b981;
+        
+        &:hover {
+          background-color: rgba(16, 185, 129, 0.1);
+        }
+      }
+    }
   }
 }
 

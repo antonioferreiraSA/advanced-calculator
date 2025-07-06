@@ -22,7 +22,11 @@ const Calculator = ({ moduleData }) => {
   const [showConversion, setShowConversion] = useState(false);
   const [fromCurrency, setFromCurrency] = useState('GBP');
   const [toCurrency, setToCurrency] = useState('USD');
-  const [calculationHistory, setCalculationHistory] = useState([]);
+  const [calculationHistory, setCalculationHistory] = useState(() => {
+    // Load history from localStorage on component initialization
+    const savedHistory = localStorage.getItem('calculatorHistory');
+    return savedHistory ? JSON.parse(savedHistory) : [];
+  });
   const [lastUpdated, setLastUpdated] = useState(new Date());
   const [exchangeRate, setExchangeRate] = useState(1.25); // Default exchange rate
   const [exchangeRates, setExchangeRates] = useState({});
@@ -79,19 +83,15 @@ const Calculator = ({ moduleData }) => {
 
   // Set CSS variables for colors
   useEffect(() => {
-    document.documentElement.style.setProperty(
-      '--primary-color',
-      primary_color.color,
-    );
-    document.documentElement.style.setProperty(
-      '--top-bg-color',
-      top_background_color.color,
-    );
-    document.documentElement.style.setProperty(
-      '--bottom-bg-color',
-      bottom_background_color.color,
-    );
+    document.documentElement.style.setProperty('--primary-color', primary_color.color);
+    document.documentElement.style.setProperty('--top-background-color', top_background_color.color);
+    document.documentElement.style.setProperty('--bottom-background-color', bottom_background_color.color);
   }, [primary_color, top_background_color, bottom_background_color]);
+
+  // Save calculation history to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('calculatorHistory', JSON.stringify(calculationHistory));
+  }, [calculationHistory]);
 
   // Fetch available currencies when component mounts
   useEffect(() => {
@@ -341,6 +341,27 @@ const Calculator = ({ moduleData }) => {
   // Clear history
   const clearHistory = () => {
     setCalculationHistory([]);
+  };
+
+  // Copy calculation to clipboard
+  const copyCalculation = (item) => {
+    const calculationText = `${item.firstNumber} ${item.operation} ${item.secondNumber} = ${item.result}`;
+    const conversionText = item.convertedResult 
+      ? ` (${item.result} ${item.fromCurrency} = ${item.convertedResult.toFixed(2)} ${item.toCurrency})`
+      : '';
+    const fullText = calculationText + conversionText;
+    
+    navigator.clipboard.writeText(fullText).then(() => {
+      // You could add a toast notification here if needed
+      console.log('Calculation copied to clipboard');
+    }).catch(err => {
+      console.error('Failed to copy: ', err);
+    });
+  };
+
+  // Delete individual history item
+  const deleteHistoryItem = (indexToDelete) => {
+    setCalculationHistory(calculationHistory.filter((_, index) => index !== indexToDelete));
   };
 
   return (
@@ -637,12 +658,38 @@ const Calculator = ({ moduleData }) => {
                     </div>
                     {item.convertedResult && (
                       <div className="history-conversion">
-                        {item.result} {item.fromCurrency} ={' '}
-                        {item.convertedResult.toFixed(2)} {item.toCurrency}
+                        <span className="from-amount">{item.result}</span>
+                        <img 
+                          src={getCurrencyFlag(item.fromCurrency)} 
+                          alt={item.fromCurrency}
+                          className="currency-flag"
+                        />
+                        <span>{item.fromCurrency}</span>
+                        <span>=</span>
+                        <span className="to-amount">{item.convertedResult.toFixed(2)}</span>
+                        <img 
+                          src={getCurrencyFlag(item.toCurrency)} 
+                          alt={item.toCurrency}
+                          className="currency-flag"
+                        />
+                        <span>{item.toCurrency}</span>
                       </div>
                     )}
-                    <div className="history-timestamp">
-                      {formatDate(item.timestamp)}
+                    <div className="history-actions">
+                      <button 
+                        className="history-action-btn delete-btn"
+                        onClick={() => deleteHistoryItem(index)}
+                        title="Delete this calculation"
+                      >
+                        ✕ DELETE
+                      </button>
+                      <button 
+                        className="history-action-btn copy-btn"
+                        onClick={() => copyCalculation(item)}
+                        title="Copy calculation to clipboard"
+                      >
+                        📋 COPY
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -656,3 +703,4 @@ const Calculator = ({ moduleData }) => {
 };
 
 export default Calculator;
+
