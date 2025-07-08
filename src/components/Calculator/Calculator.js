@@ -276,11 +276,11 @@ const renderOperationIcon = () => {
               setShowOperationsDropdown(false);
             }}
           >
+            <span className="operation-text">ADDITION</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 35 36" fill="none">
               <rect x="15" y="1.125" width="5" height="33.75" rx="2.5" fill="#544DB4"/>
               <rect x="34.375" y="15.5" width="5" height="33.75" rx="2.5" transform="rotate(90 34.375 15.5)" fill="#544DB4"/>
             </svg>
-            <span className="operation-text">ADDITION</span>
           </div>
           <div
             className="operation-item"
@@ -289,10 +289,10 @@ const renderOperationIcon = () => {
               setShowOperationsDropdown(false);
             }}
           >
+            <span className="operation-text">SUBTRACTION</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 35 35" fill="none">
               <rect x="34.375" y="15" width="5" height="33.75" rx="2.5" transform="rotate(90 34.375 15)" fill="#544DB4"/>
             </svg>
-            <span className="operation-text">SUBTRACTION</span>
           </div>
           <div
             className="operation-item"
@@ -301,11 +301,11 @@ const renderOperationIcon = () => {
               setShowOperationsDropdown(false);
             }}
           >
+            <span className="operation-text">MULTIPLICATION</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 35 35" fill="none">
               <rect x="30.9197" y="0.544739" width="5" height="42.9567" rx="2.5" transform="rotate(45 30.9197 0.544739)" fill="#544DB4"/>
               <rect x="34.4553" y="30.9197" width="5" height="42.9567" rx="2.5" transform="rotate(135 34.4553 30.9197)" fill="#544DB4"/>
             </svg>
-            <span className="operation-text">MULTIPLICATION</span>
           </div>
           <div
             className="operation-item"
@@ -314,12 +314,12 @@ const renderOperationIcon = () => {
               setShowOperationsDropdown(false);
             }}
           >
+            <span className="operation-text">DIVISION</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 35 35" fill="none">
               <rect x="34.375" y="15" width="5" height="33.75" rx="2.5" transform="rotate(90 34.375 15)" fill="#544DB4"/>
               <rect x="20" y="4" width="5" height="5" rx="2.5" transform="rotate(90 20 4)" fill="#544DB4"/>
               <rect x="20" y="26" width="5" height="5" rx="2.5" transform="rotate(90 20 26)" fill="#544DB4"/>
             </svg>
-            <span className="operation-text">DIVISION</span>
           </div>
         </div>
       )}
