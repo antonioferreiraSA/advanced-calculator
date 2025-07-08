@@ -19,6 +19,11 @@ const [secondNumber, setSecondNumber] = useState('');
 const [operation, setOperation] = useState('+');
 const [result, setResult] = useState(null);
 const [error, setError] = useState('');
+const [errors, setErrors] = useState({
+  firstNumber: '',
+  secondNumber: '',
+  general: ''
+});
 const [showConversion, setShowConversion] = useState(false);
 const [fromCurrency, setFromCurrency] = useState('GBP');
 const [toCurrency, setToCurrency] = useState('USD');
@@ -50,20 +55,29 @@ const CURRENCY_TO_COUNTRY_MAP = {
   
   // European currencies
   'SEK': 'se', 'NOK': 'no', 'DKK': 'dk', 'PLN': 'pl', 'HUF': 'hu',
-  'CZK': 'cz', 'RON': 'ro',
+  'CZK': 'cz', 'RON': 'ro', 'BGN': 'bg', 'ISK': 'is', 'HRK': 'hr',
   
   // Asian currencies
   'KRW': 'kr', 'SGD': 'sg', 'TWD': 'tw', 'THB': 'th', 'IDR': 'id',
-  'PHP': 'ph', 'MYR': 'my', 'INR': 'in',
+  'PHP': 'ph', 'MYR': 'my', 'INR': 'in', 'VND': 'vn', 'BDT': 'bd',
+  'PKR': 'pk', 'NPR': 'np', 'LKR': 'lk', 'MMK': 'mm',
   
-  // Middle Eastern currencies
-  'ILS': 'il', 'AED': 'ae', 'SAR': 'sa',
+  // Middle Eastern & African currencies
+  'ILS': 'il', 'AED': 'ae', 'SAR': 'sa', 'QAR': 'qa', 'OMR': 'om',
+  'KWD': 'kw', 'BHD': 'bh', 'JOD': 'jo', 'EGP': 'eg', 'MAD': 'ma',
+  'TND': 'tn', 'NGN': 'ng', 'KES': 'ke', 'GHS': 'gh', 'ZAR': 'za',
   
   // American currencies
-  'MXN': 'mx', 'BRL': 'br', 'CLP': 'cl', 'COP': 'co',
+  'MXN': 'mx', 'BRL': 'br', 'CLP': 'cl', 'COP': 'co', 'ARS': 'ar',
+  'PEN': 'pe', 'UYU': 'uy', 'BOB': 'bo', 'VES': 've', 'PYG': 'py',
+  'GTQ': 'gt', 'DOP': 'do', 'CRC': 'cr', 'PAB': 'pa', 'JMD': 'jm',
+  'TTD': 'tt', 'BBD': 'bb', 'BSD': 'bs', 'AWG': 'aw',
   
   // Other currencies
-  'RUB': 'ru', 'ZAR': 'za', 'TRY': 'tr'
+  'RUB': 'ru', 'TRY': 'tr', 'UAH': 'ua', 'KZT': 'kz', 'GEL': 'ge',
+  'AMD': 'am', 'AZN': 'az', 'UZS': 'uz', 'FJD': 'fj', 'XCD': 'ag',
+  'MUR': 'mu', 'SCR': 'sc', 'MGA': 'mg', 'MZN': 'mz', 'SZL': 'sz',
+  'MWK': 'mw', 'GMD': 'gm', 'CVE': 'cv', 'SLL': 'sl', 'HTG': 'ht'
 };
 
 /**
@@ -72,6 +86,12 @@ const CURRENCY_TO_COUNTRY_MAP = {
  * @returns {string} URL to the flag image
  */
 const getCurrencyFlag = (currencyCode) => {
+  // Special cases for currencies that need specific handling
+  if (currencyCode === 'XAF') return 'https://flagcdn.com/w40/cm.png'; // Central African CFA franc - using Cameroon
+  if (currencyCode === 'XOF') return 'https://flagcdn.com/w40/sn.png'; // West African CFA franc - using Senegal
+  if (currencyCode === 'XPF') return 'https://flagcdn.com/w40/pf.png'; // CFP franc - using French Polynesia
+  if (currencyCode === 'XCD') return 'https://flagcdn.com/w40/ag.png'; // East Caribbean dollar - using Antigua and Barbuda
+  
   const countryCode = CURRENCY_TO_COUNTRY_MAP[currencyCode] || 'un';
   return `https://flagcdn.com/w40/${countryCode.toLowerCase()}.png`;
 };
@@ -132,6 +152,15 @@ const fetchExchangeRate = async (baseCurrency, targetCurrency) => {
 
     if (data.result === 'success') {
       setExchangeRate(data.conversion_rate);
+      
+      // Store the exchange rate in the exchangeRates object
+      setExchangeRates(prevRates => ({
+        ...prevRates,
+        [baseCurrency]: {
+          ...(prevRates[baseCurrency] || {}),
+          [targetCurrency]: data.conversion_rate
+        }
+      }));
     } else {
       console.error(`Exchange rate API error: ${data.error_type}`);
       setExchangeRate(null);
@@ -283,11 +312,81 @@ const handleSecondNumberChange = (e) => {
   }
 };
 
+// Validate form inputs
+const validateInputs = () => {
+  const newErrors = {
+    firstNumber: '',
+    secondNumber: '',
+    general: '',
+    fromCurrency: '',
+    toCurrency: ''
+  };
+  
+  let isValid = true;
+  
+  if (!firstNumber.trim()) {
+    newErrors.firstNumber = 'First number is required';
+    isValid = false;
+  } else if (isNaN(parseFloat(firstNumber))) {
+    newErrors.firstNumber = 'Please enter a valid number';
+    isValid = false;
+  }
+  
+  if (!secondNumber.trim()) {
+    newErrors.secondNumber = 'Second number is required';
+    isValid = false;
+  } else if (isNaN(parseFloat(secondNumber))) {
+    newErrors.secondNumber = 'Please enter a valid number';
+    isValid = false;
+  }
+  
+  if (operation === '/' && parseFloat(secondNumber) === 0) {
+    newErrors.secondNumber = 'Cannot divide by zero';
+    isValid = false;
+  }
+  
+  if (showConversion) {
+    if (!fromCurrency) {
+      newErrors.fromCurrency = 'Start currency is required';
+      isValid = false;
+    }
+    
+    if (!toCurrency) {
+      newErrors.toCurrency = 'Destination currency is required';
+      isValid = false;
+    }
+    
+    if (fromCurrency === toCurrency && fromCurrency) {
+      newErrors.general = 'Start and destination currencies must be different';
+      isValid = false;
+    }
+    
+    // We don't need to check for exchange rates availability here
+    // The fetchExchangeRate function will handle any API errors
+    // and the exchange rate is set directly in the state
+  }
+  
+  setErrors(newErrors);
+  return isValid;
+};
+
 // Calculate result based on operation
 const calculateResult = () => {
   setError('');
-  const num1 = parseFloat(firstNumber) || 0;
-  const num2 = parseFloat(secondNumber) || 0;
+  setErrors({
+    firstNumber: '',
+    secondNumber: '',
+    general: '',
+    fromCurrency: '',
+    toCurrency: ''
+  });
+  
+  if (!validateInputs()) {
+    return;
+  }
+  
+  const num1 = parseFloat(firstNumber);
+  const num2 = parseFloat(secondNumber);
   let calculatedResult;
 
   switch (operation) {
@@ -301,12 +400,7 @@ const calculateResult = () => {
       calculatedResult = num1 * num2;
       break;
     case '/':
-      if (num2 === 0) {
-        setError('Cannot divide by zero');
-        return;
-      } else {
-        calculatedResult = num1 / num2;
-      }
+      calculatedResult = num1 / num2;
       break;
     default:
       return;
@@ -336,6 +430,13 @@ const handleReset = () => {
   setOperation('+');
   setResult(null);
   setError('');
+  setErrors({
+    firstNumber: '',
+    secondNumber: '',
+    general: '',
+    fromCurrency: '',
+    toCurrency: ''
+  });
 };
 
 // Clear history
@@ -393,8 +494,11 @@ return (
               value={firstNumber}
               onChange={handleFirstNumberChange}
               placeholder="First number..."
-              className={error && !firstNumber ? 'error' : ''}
+              className={errors.firstNumber ? 'error' : ''}
             />
+            {errors.firstNumber && (
+              <div className="error-message">{errors.firstNumber}</div>
+            )}
           </div>
 
           <div className="input-group">
@@ -412,8 +516,11 @@ return (
               value={secondNumber}
               onChange={handleSecondNumberChange}
               placeholder="Second number..."
-              className={error && !secondNumber ? 'error' : ''}
+              className={errors.secondNumber ? 'error' : ''}
             />
+            {errors.secondNumber && (
+              <div className="error-message">{errors.secondNumber}</div>
+            )}
           </div>
 
           {renderOperationIcon()}
@@ -437,12 +544,15 @@ return (
               <div className="currency-row">
                 <div className="currency-column">
                   <label>Start Currency</label>
+                  {errors.fromCurrency && (
+                    <div className="error-message">{errors.fromCurrency}</div>
+                  )}
                   <div
                     className="currency-selector"
                     ref={fromCurrencyDropdownRef}
                   >
                     <div
-                      className="currency-selected"
+                      className={`currency-selected ${errors.fromCurrency ? 'error' : ''}`}
                       onClick={() =>
                         !isLoadingRates &&
                         setShowFromCurrencyDropdown(!showFromCurrencyDropdown)
@@ -518,12 +628,15 @@ return (
 
                 <div className="currency-column">
                   <label>Destination Currency</label>
+                  {errors.toCurrency && (
+                    <div className="error-message">{errors.toCurrency}</div>
+                  )}
                   <div
                     className="currency-selector"
                     ref={toCurrencyDropdownRef}
                   >
                     <div
-                      className="currency-selected"
+                      className={`currency-selected ${errors.toCurrency ? 'error' : ''}`}
                       onClick={() =>
                         !isLoadingRates &&
                         setShowToCurrencyDropdown(!showToCurrencyDropdown)
@@ -602,6 +715,10 @@ return (
               {clear_button_text}
             </button>
           </div>
+          
+          {errors.general && (
+            <div className="error-container">{errors.general}</div>
+          )}
         </div>
       </div>
 

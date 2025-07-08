@@ -107,7 +107,7 @@ width: calc(50% - 1rem);
 width: 100%;
 display: flex;
 flex-direction: column;
-gap: 1.5rem;
+gap: 15px;;
 
 @media (min-width: $breakpoint-md) {
 width: calc(50% - 1rem);
@@ -116,7 +116,7 @@ width: calc(50% - 1rem);
 
 .calculator-card {
 width: 100%;
-max-width: 500px;
+max-width: 694px;
 background-color: #fff;
 border-radius: var(--border-radius);
 box-shadow: var(--box-shadow);
@@ -132,7 +132,9 @@ margin-bottom: 1.5rem;
 @media (min-width: $breakpoint-lg) {
 flex: 1;
 min-width: 300px;
-max-width: 500px;
+min-height: 607px;
+max-width: 694px;
+
 }
 }
 
@@ -204,7 +206,8 @@ transition: all 0.3s;
 }
 
 &.error {
-  border-color: var(--error-color);
+  border: 2px solid #FF4D4F;
+  background-color: rgba(255, 77, 79, 0.05);
 }
 
 &::placeholder {
@@ -220,9 +223,12 @@ transition: all 0.3s;
 }
 
 .error-message {
-color: var(--error-color);
-font-size: 0.875rem;
-margin-top: 0.5rem;
+  color: #FF4D4F;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 0.5rem;
+  padding-left: 24px;
 }
 }
 
@@ -388,8 +394,15 @@ margin-bottom: 1.5rem;
 
 .currency-row {
 display: flex;
-align-items: center;
+flex-direction: column; /* Column layout on mobile */
+align-items: stretch;
+width: 100%;
 gap: 1rem;
+
+@media (min-width: $breakpoint-md) {
+  flex-direction: row; /* Row layout from tablet up */
+  align-items: center;
+}
 }
 
 .currency-column {
@@ -399,8 +412,6 @@ label {
 display: block;
 margin-bottom: 0.5rem;
 color: #000;
-leading-trim: both;
-text-edge: cap;
 font-family: Inter;
 font-size: 16px;
 font-style: normal;
@@ -462,32 +473,23 @@ position: absolute;
 top: calc(100% + 5px);
 left: 0;
 right: 0;
-background-color: white;
-border-radius: 12px;
-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-max-height: 250px;
+background-color: #F8FAFD;
+border-radius: 24px;
+max-height: 138px;
 overflow-y: auto;
 z-index: 100;
 padding: 6px 0;
 
-/* Custom scrollbar styling */
+/* Hide scrollbar for webkit browsers */
 &::-webkit-scrollbar {
-  width: 8px;
+  display: none;
 }
 
-&::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
-}
+/* Hide scrollbar for Firefox */
+scrollbar-width: none;
 
-&::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
-  border-radius: 10px;
-  
-  &:hover {
-    background: #a8a8a8;
-  }
-}
+/* Hide scrollbar for IE and Edge */
+-ms-overflow-style: none;
 
 .currency-option {
   display: flex;
@@ -566,10 +568,13 @@ animation: spin 1s linear infinite;
 .currency-arrow {
 font-size: 1.5rem;
 color: var(--primary-color);
-display: flex;
+display: none;
 align-items: center;
 justify-content: center;
 margin: 0 1rem;
+@media (min-width: $breakpoint-md) {
+  display: flex;
+  }
 }
 
 .button-group {
@@ -666,7 +671,6 @@ min-height: 130.5px;
 background-color: #0B0833;
 border-radius: 42px;
 padding: 1.5rem 2.5rem;
-margin-bottom: 1.5rem;
 display: flex;
 flex-direction: column;
 justify-content: center;
@@ -789,6 +793,7 @@ align-items: center;
 
 .history-card {
 width: 100%;
+max-height: 461px;
 max-width: 584px;
 background-color: #F5F5F5;
 border-radius: var(--border-radius);
@@ -847,13 +852,19 @@ svg {
 }
 
 .history-empty {
-color: var(--text-light);
-text-align: center;
-padding: 2rem 0;
+  color: #545353;
+  leading-trim: both;
+  text-edge: cap;
+  font-family: Inter;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  width:280px;
 }
 
 .history-list {
-max-height: 400px;
+max-height: 315px;
 overflow-y: auto;
 
 /* Hide scrollbar for webkit browsers */
@@ -958,12 +969,16 @@ gap: 0.5rem;
 }
 
 .error-container {
-padding: 0.75rem;
-background-color: rgba(255, 77, 79, 0.1);
-border-radius: var(--border-radius);
-color: var(--error-color);
-margin-top: 1rem;
-font-size: 0.875rem;
+  padding: 16px 24px;
+  background-color: rgba(255, 77, 79, 0.1);
+  border-radius: 110px;
+  border: 2px solid #FF4D4F;
+  color: #FF4D4F;
+  margin-top: 1rem;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
 }
 
 // Label with icon wrapper
