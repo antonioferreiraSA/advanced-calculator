@@ -379,33 +379,41 @@ const Calculator = ({ moduleData }) => {
             <h2 className="calculator-title">{calculator_title}</h2>
 
             <div className="input-group">
-              <label htmlFor="firstNumber">{first_number_label}</label>
-              <div className="input-with-icon">
-                <input
-                  type="text"
-                  id="firstNumber"
-                  value={firstNumber}
-                  onChange={handleFirstNumberChange}
-                  placeholder="First number..."
-                  className={error && !firstNumber ? 'error' : ''}
-                />
-                <span className="info-icon">i</span>
+              <div className="label-with-icon">
+                <label htmlFor="firstNumber">{first_number_label}</label>
+                <span className="info-icon" title="please typing in a number">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none" title="please typing in a number">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M0 9.89154C0 4.70474 4.20474 0.5 9.39154 0.5C14.5783 0.5 18.7831 4.70474 18.7831 9.89154C18.7831 15.0783 14.5783 19.2831 9.39154 19.2831C4.20474 19.2831 0 15.0783 0 9.89154ZM9.39638 13.4764C8.99882 13.4764 8.67654 13.1541 8.67654 12.7566V9.78121C8.67654 9.38365 8.99882 9.06137 9.39638 9.06137C9.79394 9.06137 10.1162 9.38365 10.1162 9.78121V12.7758C10.1009 13.1636 9.78453 13.4716 9.39638 13.4764ZM8.67654 7.45845C8.67654 7.85601 8.99882 8.17829 9.39638 8.17829C9.78453 8.17349 10.1009 7.86553 10.1162 7.47765V7.12252C10.1162 6.72497 9.79394 6.40268 9.39638 6.40268C8.99882 6.40268 8.67654 6.72497 8.67654 7.12252V7.45845Z" fill="#DEDCFF"/>
+                  </svg>
+                </span>
               </div>
+              <input
+                type="text"
+                id="firstNumber"
+                value={firstNumber}
+                onChange={handleFirstNumberChange}
+                placeholder="First number..."
+                className={error && !firstNumber ? 'error' : ''}
+              />
             </div>
 
             <div className="input-group">
-              <label htmlFor="secondNumber">{second_number_label}</label>
-              <div className="input-with-icon">
-                <input
-                  type="text"
-                  id="secondNumber"
-                  value={secondNumber}
-                  onChange={handleSecondNumberChange}
-                  placeholder="Second number..."
-                  className={error && !secondNumber ? 'error' : ''}
-                />
-                <span className="info-icon">i</span>
+              <div className="label-with-icon">
+                <label htmlFor="secondNumber">{second_number_label}</label>
+                <span className="info-icon" title="please typing in a number">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none" title="please typing in a number">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M0 9.89154C0 4.70474 4.20474 0.5 9.39154 0.5C14.5783 0.5 18.7831 4.70474 18.7831 9.89154C18.7831 15.0783 14.5783 19.2831 9.39154 19.2831C4.20474 19.2831 0 15.0783 0 9.89154ZM9.39638 13.4764C8.99882 13.4764 8.67654 13.1541 8.67654 12.7566V9.78121C8.67654 9.38365 8.99882 9.06137 9.39638 9.06137C9.79394 9.06137 10.1162 9.38365 10.1162 9.78121V12.7758C10.1009 13.1636 9.78453 13.4716 9.39638 13.4764ZM8.67654 7.45845C8.67654 7.85601 8.99882 8.17829 9.39638 8.17829C9.78453 8.17349 10.1009 7.86553 10.1162 7.47765V7.12252C10.1162 6.72497 9.79394 6.40268 9.39638 6.40268C8.99882 6.40268 8.67654 6.72497 8.67654 7.12252V7.45845Z" fill="#DEDCFF"/>
+                  </svg>
+                </span>
               </div>
+              <input
+                type="text"
+                id="secondNumber"
+                value={secondNumber}
+                onChange={handleSecondNumberChange}
+                placeholder="Second number..."
+                className={error && !secondNumber ? 'error' : ''}
+              />
             </div>
 
             {renderOperationIcon()}

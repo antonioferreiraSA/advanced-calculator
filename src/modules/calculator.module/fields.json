@@ -32,7 +32,7 @@
     "label": "Clear Button Text",
     "required": false,
     "type": "text",
-    "default": "Clear"
+    "default": "RESET VALUES"
   },
   {
     "name": "primary_color",

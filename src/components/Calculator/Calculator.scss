@@ -148,14 +148,31 @@ margin-bottom: 1.5rem;
 }
 }
 
+.calculator-title {
+color: #000;
+leading-trim: both;
+text-edge: cap;
+font-family: Inter;
+font-size: 32px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
+
 .input-group {
 margin-bottom: 1.5rem;
 
 label {
+color: #000;
+leading-trim: both;
+text-edge: cap;
+font-family: Inter;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
 display: block;
 margin-bottom: 0.5rem;
-font-weight: 500;
-color: var(--text-color);
 display: flex;
 align-items: center;
 
@@ -170,13 +187,18 @@ align-items: center;
 }
 
 input {
+display: flex;
+padding: 16px 24px;
+align-items: center;
+gap: 10px;
+align-self: stretch;
+border-radius: 110px;
+background: #F8FAFD;
+box-shadow: 0px 4px 14px 0px rgba(222, 220, 255, 0.46) inset;
 width: 100%;
-padding: 0.75rem 1rem;
-border: 1px solid var(--border-color);
-border-radius: var(--input-border-radius);
+border: none;
 font-size: 1rem;
 transition: all 0.3s;
-background-color: #f9f9f9;
 
 &:focus {
   outline: none;
@@ -186,6 +208,17 @@ background-color: #f9f9f9;
 
 &.error {
   border-color: var(--error-color);
+}
+
+&::placeholder {
+  color: #545353;
+  leading-trim: both;
+  text-edge: cap;
+  font-family: Inter;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 }
 
@@ -267,19 +300,27 @@ font-size: 24px;
 
 .divider {
 border: none;
-border-top: 1px solid #e0e0e0;
+border-top: 2px solid #DEDCFF;
 margin: 1.5rem 0;
+stroke-width: 2px;
+stroke: #DEDCFF;
 }
 
 .toggle-group {
 display: flex;
 align-items: center;
-justify-content: space-between;
+gap:32px;
 margin-bottom: 1.5rem;
 
 .toggle-label {
+color: #000;
+leading-trim: both;
+text-edge: cap;
+font-family: Inter;
+font-size: 32px;
+font-style: normal;
 font-weight: 600;
-font-size: 1.1rem;
+line-height: normal;
 }
 
 /* The switch - the box around the slider */
@@ -306,7 +347,7 @@ top: 0;
 left: 0;
 right: 0;
 bottom: 0;
-background-color: #e0e0e0;
+background-color: #DEDCFF;
 -webkit-transition: .4s;
 transition: .4s;
 }
@@ -318,13 +359,13 @@ height: 22px;
 width: 22px;
 left: 4px;
 bottom: 4px;
-background-color: white;
+background-color: #545353;
 -webkit-transition: .4s;
 transition: .4s;
 }
 
 input:checked + .slider {
-background-color: var(--primary-color);
+background-color: #DEDCFF;
 }
 
 input:focus + .slider {
@@ -544,11 +585,8 @@ margin-top: 1.5rem;
 
 .btn {
 width: 100%;
-padding: 0.75rem 1rem;
 border: none;
 border-radius: var(--border-radius);
-font-size: 0.9rem;
-font-weight: 600;
 cursor: pointer;
 transition: all 0.3s;
 text-transform: uppercase;
@@ -570,22 +608,52 @@ font-size: 1rem;
 }
 
 .btn-primary {
-background-color: var(--primary-color);
-color: #fff;
+display: flex;
+padding: 24px 32px;
+justify-content: center;
+align-items: center;
+gap: 10px;
 border-radius: 50px;
+background: #544DB4;
+box-shadow: 0px 4px 22px 0px rgba(84, 77, 180, 0.34);
+color: #FFF;
+leading-trim: both;
+text-edge: cap;
+font-family: Inter;
+font-size: 24px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+letter-spacing: 1.2px;
 
 &:hover {
-background-color: darken(#6B5DE3, 10%);
+background-color: darken(#544DB4, 10%);
 }
 }
 
 .btn-secondary {
-background-color: #f5f5f5;
-color: var(--text-color);
+display: flex;
+padding: 16px 24px;
+justify-content: center;
+align-items: center;
+gap: 10px;
 border-radius: 50px;
+border: 2px solid #8F8F8F;
+background-color: transparent;
+color: #8F8F8F;
+leading-trim: both;
+text-edge: cap;
+font-family: Inter;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+letter-spacing: 0.8px;
 
 &:hover {
-background-color: #e0e0e0;
+background-color: rgba(143, 143, 143, 0.1);
+border-color: darken(#8F8F8F, 10%);
+color: darken(#8F8F8F, 10%);
 }
 }
 
@@ -894,6 +962,38 @@ border-radius: var(--border-radius);
 color: var(--error-color);
 margin-top: 1rem;
 font-size: 0.875rem;
+}
+
+// Label with icon wrapper
+.label-with-icon {
+display: flex;
+align-items: center;
+gap: 10px;
+margin-bottom: 0.5rem;
+}
+
+// Info icon styling
+.info-icon {
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+width: 19px;
+height: 20px;
+transition: opacity 0.2s ease;
+flex-shrink: 0;
+pointer-events: auto;
+
+&:hover {
+  opacity: 0.8;
+}
+
+svg {
+  width: 19px;
+  height: 20px;
+  display: block;
+  pointer-events: none;
+}
 }
 
 // Additional small screen adjustments
