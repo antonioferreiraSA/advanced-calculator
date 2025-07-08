@@ -233,20 +233,40 @@ useEffect(() => {
 // Render operation icon with dropdown
 const renderOperationIcon = () => {
   return (
-    <div
-      className="operation-icon"
-      onClick={() => setShowOperationsDropdown(!showOperationsDropdown)}
-      ref={operationsDropdownRef}
-    >
-      {operation === '+'
-        ? '+'
-        : operation === '-'
-        ? '−'
-        : operation === '*'
-        ? '×'
-        : operation === '/'
-        ? '÷'
-        : operation}
+    <div className="operation-container">
+      <div className="operation-text-container">
+        <span className="operation-text">
+          {operation === '+' ? 'ADDITION' : 
+           operation === '-' ? 'SUBTRACTION' : 
+           operation === '*' ? 'MULTIPLICATION' : 
+           operation === '/' ? 'DIVISION' : ''}
+        </span>
+      </div>
+      <div className="operation-icon"
+        onClick={() => setShowOperationsDropdown(!showOperationsDropdown)}
+        ref={operationsDropdownRef}
+      >
+      {operation === '+' ? (
+        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="36" viewBox="0 0 35 36" fill="none">
+          <rect x="15" y="1.125" width="5" height="33.75" rx="2.5" fill="#544DB4"/>
+          <rect x="34.375" y="15.5" width="5" height="33.75" rx="2.5" transform="rotate(90 34.375 15.5)" fill="#544DB4"/>
+        </svg>
+      ) : operation === '-' ? (
+        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
+          <rect x="34.375" y="15" width="5" height="33.75" rx="2.5" transform="rotate(90 34.375 15)" fill="#544DB4"/>
+        </svg>
+      ) : operation === '*' ? (
+        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
+          <rect x="30.9197" y="0.544739" width="5" height="42.9567" rx="2.5" transform="rotate(45 30.9197 0.544739)" fill="#544DB4"/>
+          <rect x="34.4553" y="30.9197" width="5" height="42.9567" rx="2.5" transform="rotate(135 34.4553 30.9197)" fill="#544DB4"/>
+        </svg>
+      ) : operation === '/' ? (
+        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
+          <rect x="34.375" y="15" width="5" height="33.75" rx="2.5" transform="rotate(90 34.375 15)" fill="#544DB4"/>
+          <rect x="20" y="4" width="5" height="5" rx="2.5" transform="rotate(90 20 4)" fill="#544DB4"/>
+          <rect x="20" y="26" width="5" height="5" rx="2.5" transform="rotate(90 20 26)" fill="#544DB4"/>
+        </svg>
+      ) : operation}
       {showOperationsDropdown && (
         <div className="operations-dropdown">
           <div
@@ -256,7 +276,11 @@ const renderOperationIcon = () => {
               setShowOperationsDropdown(false);
             }}
           >
-            +
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 35 36" fill="none">
+              <rect x="15" y="1.125" width="5" height="33.75" rx="2.5" fill="#544DB4"/>
+              <rect x="34.375" y="15.5" width="5" height="33.75" rx="2.5" transform="rotate(90 34.375 15.5)" fill="#544DB4"/>
+            </svg>
+            <span className="operation-text">ADDITION</span>
           </div>
           <div
             className="operation-item"
@@ -265,7 +289,10 @@ const renderOperationIcon = () => {
               setShowOperationsDropdown(false);
             }}
           >
-            −
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 35 35" fill="none">
+              <rect x="34.375" y="15" width="5" height="33.75" rx="2.5" transform="rotate(90 34.375 15)" fill="#544DB4"/>
+            </svg>
+            <span className="operation-text">SUBTRACTION</span>
           </div>
           <div
             className="operation-item"
@@ -274,7 +301,11 @@ const renderOperationIcon = () => {
               setShowOperationsDropdown(false);
             }}
           >
-            ×
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 35 35" fill="none">
+              <rect x="30.9197" y="0.544739" width="5" height="42.9567" rx="2.5" transform="rotate(45 30.9197 0.544739)" fill="#544DB4"/>
+              <rect x="34.4553" y="30.9197" width="5" height="42.9567" rx="2.5" transform="rotate(135 34.4553 30.9197)" fill="#544DB4"/>
+            </svg>
+            <span className="operation-text">MULTIPLICATION</span>
           </div>
           <div
             className="operation-item"
@@ -283,10 +314,16 @@ const renderOperationIcon = () => {
               setShowOperationsDropdown(false);
             }}
           >
-            ÷
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 35 35" fill="none">
+              <rect x="34.375" y="15" width="5" height="33.75" rx="2.5" transform="rotate(90 34.375 15)" fill="#544DB4"/>
+              <rect x="20" y="4" width="5" height="5" rx="2.5" transform="rotate(90 20 4)" fill="#544DB4"/>
+              <rect x="20" y="26" width="5" height="5" rx="2.5" transform="rotate(90 20 26)" fill="#544DB4"/>
+            </svg>
+            <span className="operation-text">DIVISION</span>
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 };
@@ -479,51 +516,57 @@ return (
         <div className="calculator-card">
           <h2 className="calculator-title">{calculator_title}</h2>
 
-          <div className="input-group">
-            <div className="label-with-icon">
-              <label htmlFor="firstNumber">{first_number_label}</label>
-              <span className="info-icon" title="please typing in a number">
-                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none" title="please typing in a number">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M0 9.89154C0 4.70474 4.20474 0.5 9.39154 0.5C14.5783 0.5 18.7831 4.70474 18.7831 9.89154C18.7831 15.0783 14.5783 19.2831 9.39154 19.2831C4.20474 19.2831 0 15.0783 0 9.89154ZM9.39638 13.4764C8.99882 13.4764 8.67654 13.1541 8.67654 12.7566V9.78121C8.67654 9.38365 8.99882 9.06137 9.39638 9.06137C9.79394 9.06137 10.1162 9.38365 10.1162 9.78121V12.7758C10.1009 13.1636 9.78453 13.4716 9.39638 13.4764ZM8.67654 7.45845C8.67654 7.85601 8.99882 8.17829 9.39638 8.17829C9.78453 8.17349 10.1009 7.86553 10.1162 7.47765V7.12252C10.1162 6.72497 9.79394 6.40268 9.39638 6.40268C8.99882 6.40268 8.67654 6.72497 8.67654 7.12252V7.45845Z" fill="#DEDCFF"/>
-                </svg>
-              </span>
-            </div>
-            <input
-              type="text"
-              id="firstNumber"
-              value={firstNumber}
-              onChange={handleFirstNumberChange}
-              placeholder="First number..."
-              className={errors.firstNumber ? 'error' : ''}
-            />
-            {errors.firstNumber && (
-              <div className="error-message">{errors.firstNumber}</div>
-            )}
-          </div>
+          <div className="inputs-operation-container">
+            <div className="inputs-column">
+              <div className="input-group">
+                <div className="label-with-icon">
+                  <label htmlFor="firstNumber">{first_number_label}</label>
+                  <span className="info-icon" title="please typing in a number">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none" title="please typing in a number">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M0 9.89154C0 4.70474 4.20474 0.5 9.39154 0.5C14.5783 0.5 18.7831 4.70474 18.7831 9.89154C18.7831 15.0783 14.5783 19.2831 9.39154 19.2831C4.20474 19.2831 0 15.0783 0 9.89154ZM9.39638 13.4764C8.99882 13.4764 8.67654 13.1541 8.67654 12.7566V9.78121C8.67654 9.38365 8.99882 9.06137 9.39638 9.06137C9.79394 9.06137 10.1162 9.38365 10.1162 9.78121V12.7758C10.1009 13.1636 9.78453 13.4716 9.39638 13.4764ZM8.67654 7.45845C8.67654 7.85601 8.99882 8.17829 9.39638 8.17829C9.78453 8.17349 10.1009 7.86553 10.1162 7.47765V7.12252C10.1162 6.72497 9.79394 6.40268 9.39638 6.40268C8.99882 6.40268 8.67654 6.72497 8.67654 7.12252V7.45845Z" fill="#DEDCFF"/>
+                    </svg>
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  id="firstNumber"
+                  value={firstNumber}
+                  onChange={handleFirstNumberChange}
+                  placeholder="First number..."
+                  className={errors.firstNumber ? 'error' : ''}
+                />
+                {errors.firstNumber && (
+                  <div className="error-message">{errors.firstNumber}</div>
+                )}
+              </div>
 
-          <div className="input-group">
-            <div className="label-with-icon">
-              <label htmlFor="secondNumber">{second_number_label}</label>
-              <span className="info-icon" title="please typing in a number">
-                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none" title="please typing in a number">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M0 9.89154C0 4.70474 4.20474 0.5 9.39154 0.5C14.5783 0.5 18.7831 4.70474 18.7831 9.89154C18.7831 15.0783 14.5783 19.2831 9.39154 19.2831C4.20474 19.2831 0 15.0783 0 9.89154ZM9.39638 13.4764C8.99882 13.4764 8.67654 13.1541 8.67654 12.7566V9.78121C8.67654 9.38365 8.99882 9.06137 9.39638 9.06137C9.79394 9.06137 10.1162 9.38365 10.1162 9.78121V12.7758C10.1009 13.1636 9.78453 13.4716 9.39638 13.4764ZM8.67654 7.45845C8.67654 7.85601 8.99882 8.17829 9.39638 8.17829C9.78453 8.17349 10.1009 7.86553 10.1162 7.47765V7.12252C10.1162 6.72497 9.79394 6.40268 9.39638 6.40268C8.99882 6.40268 8.67654 6.72497 8.67654 7.12252V7.45845Z" fill="#DEDCFF"/>
-                </svg>
-              </span>
+              <div className="input-group">
+                <div className="label-with-icon">
+                  <label htmlFor="secondNumber">{second_number_label}</label>
+                  <span className="info-icon" title="please typing in a number">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none" title="please typing in a number">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M0 9.89154C0 4.70474 4.20474 0.5 9.39154 0.5C14.5783 0.5 18.7831 4.70474 18.7831 9.89154C18.7831 15.0783 14.5783 19.2831 9.39154 19.2831C4.20474 19.2831 0 15.0783 0 9.89154ZM9.39638 13.4764C8.99882 13.4764 8.67654 13.1541 8.67654 12.7566V9.78121C8.67654 9.38365 8.99882 9.06137 9.39638 9.06137C9.79394 9.06137 10.1162 9.38365 10.1162 9.78121V12.7758C10.1009 13.1636 9.78453 13.4716 9.39638 13.4764ZM8.67654 7.45845C8.67654 7.85601 8.99882 8.17829 9.39638 8.17829C9.78453 8.17349 10.1009 7.86553 10.1162 7.47765V7.12252C10.1162 6.72497 9.79394 6.40268 9.39638 6.40268C8.99882 6.40268 8.67654 6.72497 8.67654 7.12252V7.45845Z" fill="#DEDCFF"/>
+                    </svg>
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  id="secondNumber"
+                  value={secondNumber}
+                  onChange={handleSecondNumberChange}
+                  placeholder="Second number..."
+                  className={errors.secondNumber ? 'error' : ''}
+                />
+                {errors.secondNumber && (
+                  <div className="error-message">{errors.secondNumber}</div>
+                )}
+              </div>
             </div>
-            <input
-              type="text"
-              id="secondNumber"
-              value={secondNumber}
-              onChange={handleSecondNumberChange}
-              placeholder="Second number..."
-              className={errors.secondNumber ? 'error' : ''}
-            />
-            {errors.secondNumber && (
-              <div className="error-message">{errors.secondNumber}</div>
-            )}
+            
+            <div className="operation-column">
+              {renderOperationIcon()}
+            </div>
           </div>
-
-          {renderOperationIcon()}
 
           <hr className="divider" />
 
