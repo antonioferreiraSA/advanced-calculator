@@ -200,7 +200,7 @@ transition: all 0.3s;
 
 &:focus {
   outline: none;
-  border-color: var(--primary-color);
+  border: 2px solid #544DB4;
   box-shadow: 0 0 0 2px rgba(107, 93, 227, 0.2);
 }
 
