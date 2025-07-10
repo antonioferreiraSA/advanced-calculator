@@ -60,7 +60,6 @@ const hubspotConfig = ({ portal, autoupload } = {}) => {
       }),
       new CopyWebpackPlugin({
         patterns: [
-          { from: 'src/images', to: 'images' },
           {
             from: 'src/modules',
             to: 'modules',
