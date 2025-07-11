@@ -3,6 +3,7 @@ const HubSpotAutoUploadPlugin = require('@hubspot/webpack-cms-plugins/HubSpotAut
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 const autoprefixer = require('autoprefixer');
+const Dotenv = require('dotenv-webpack');
 
 
 const hubspotConfig = ({ portal, autoupload } = {}) => {
@@ -65,6 +66,11 @@ const hubspotConfig = ({ portal, autoupload } = {}) => {
             to: 'modules',
           },
         ],
+      }),
+      new Dotenv({
+        systemvars: true, // Load all system environment variables as well
+        safe: true, // Load .env.example file as well
+        silent: true, // Hide any warnings
       }),
     ],
   };

@@ -24,6 +24,7 @@
     "copy-webpack-plugin": "^11.0.0",
     "core-js": "^3.6.5",
     "css-loader": "^6.7.1",
+    "dotenv-webpack": "^8.1.1",
     "eslint": "^6.5.1",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-react": "^7.29.2",

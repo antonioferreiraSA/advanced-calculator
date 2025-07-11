@@ -11,7 +11,7 @@ import HistoryCard from './components/HistoryCard';
 import { getCurrencyFlag, fetchExchangeRate, fetchAvailableCurrencies } from '../../utils/currencyUtils';
 import { validateCalculatorInputs } from '../../utils/validationUtils';
 
-const API_KEY = '854e48c42aabb1638d766061'; // ExchangeRate-API key
+const API_KEY = process.env.REACT_APP_EXCHANGE_RATE_API_KEY; // ExchangeRate-API key from environment variables
 
 const Calculator = ({ moduleData }) => {
   const {
