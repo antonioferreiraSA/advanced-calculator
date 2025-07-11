@@ -33,50 +33,5 @@
     "required": false,
     "type": "text",
     "default": "RESET VALUES"
-  },
-  {
-    "name": "primary_color",
-    "label": "Primary Color",
-    "required": false,
-    "type": "color",
-    "default": {
-      "color": "#0091ae",
-      "opacity": 100
-    }
-  },
-  {
-    "name": "currency_converter_title",
-    "label": "Currency Converter Title",
-    "required": false,
-    "type": "text",
-    "default": "Currency Converter"
-  },
-  {
-    "name": "amount_label",
-    "label": "Amount Input Label",
-    "required": false,
-    "type": "text",
-    "default": "Amount"
-  },
-  {
-    "name": "from_currency_label",
-    "label": "From Currency Label",
-    "required": false,
-    "type": "text",
-    "default": "From"
-  },
-  {
-    "name": "to_currency_label",
-    "label": "To Currency Label",
-    "required": false,
-    "type": "text",
-    "default": "To"
-  },
-  {
-    "name": "convert_button_text",
-    "label": "Convert Button Text",
-    "required": false,
-    "type": "text",
-    "default": "Convert"
   }
 ]
